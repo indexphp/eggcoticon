@@ -2018,7 +2018,7 @@ contract Eggcoticon is Ownable, ERC165, ERC721 {
     // Public fields
     bool public open = false;
 
-    string public folder = "";
+    string public folder = "QmcSkGg28Q3kGcFcfbwS8GuDyHfK8hKmnXvPvXEf1VGKBH";
 
     string public provenance = "";
 
@@ -2026,7 +2026,7 @@ contract Eggcoticon is Ownable, ERC165, ERC721 {
 
     bool public locked = false;
 
-    uint256 public mintPrice = 200000000000000000; //0.20 Polygon
+    uint256 public mintPrice = 20000000000000000000; // 20 Polygon
 
     modifier notLocked() {
         require(!locked, "Contract has been locked");
@@ -2035,9 +2035,9 @@ contract Eggcoticon is Ownable, ERC165, ERC721 {
 
     constructor() ERC721("Eggcoticon", "EGGC") {
         _setBaseURI(
-            "https://ipfs.io/ipfs/QmPVNHQW727mYQXbbTWGZrK1e9v2cggxjv2YptFVx2sVne/"
+            "https://genesislab.info/eggcoticon/"
         );
-        ownerMint(20);
+        devMint(100);
     }
 
     // Public methods
@@ -2103,7 +2103,7 @@ contract Eggcoticon is Ownable, ERC165, ERC721 {
     }
 
     // Admin methods
-    function ownerMint(uint256 quantity) public onlyOwner {
+    function devMint(uint256 quantity) public onlyOwner {
         for (uint256 i = 0; i < quantity; i++) {
             _mintInternal(msg.sender);
         }
@@ -2147,18 +2147,18 @@ contract Eggcoticon is Ownable, ERC165, ERC721 {
 
     function withdraw() external {
         require(
-            msg.sender == 0x2Ff5e920aBF67B0E448b0113e8854C26ce1452b9
+            msg.sender == 0xe86899DF264bbD2D041B130FD7E2927F4861E0f2
         );
 		
         uint256 bal = address(this).balance;
-        payable(address(0x2Ff5e920aBF67B0E448b0113e8854C26ce1452b9)).call{
+        payable(address(0xe86899DF264bbD2D041B130FD7E2927F4861E0f2)).call{
             value: bal
         }("");
     }
 
     function emergencyWithdraw() external {
-        require(msg.sender == 0x2Ff5e920aBF67B0E448b0113e8854C26ce1452b9);
-        (bool success, ) = payable(0x2Ff5e920aBF67B0E448b0113e8854C26ce1452b9)
+        require(msg.sender == 0xe86899DF264bbD2D041B130FD7E2927F4861E0f2);
+        (bool success, ) = payable(0xe86899DF264bbD2D041B130FD7E2927F4861E0f2)
             .call{value: address(this).balance}("");
         require(success);
     }
